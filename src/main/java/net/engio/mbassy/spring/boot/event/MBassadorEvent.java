@@ -4,7 +4,7 @@ import java.util.EventObject;
 
 /**
  * 事件(Event) 就是通过 Disruptor 进行交换的数据类型。
- * @author 		： <a href="https://github.com/hiwepy">hiwepy</a>
+ * @author 		： <a href="https://github.com/easy-4-java">hiwepy</a>
  */
 @SuppressWarnings("serial")
 public abstract class MBassadorEvent extends EventObject {
