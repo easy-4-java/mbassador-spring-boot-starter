@@ -15,111 +15,99 @@
  */
 package net.engio.mbassy.spring.boot;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * Unit tests for {{ @link MbassadorProperties }}.
+ * Unit tests for {@link MbassadorProperties}.
  *
- * <p>Verifies default values, getters/setters and POJO contract.</p>
+ * <p>Verifies the configuration prefix, the default values and every
+ * getter/setter.</p>
  *
  * @author [@Loong Wan](https://github.com/loong10k)
  * @since 1.0.0
  */
 @DisplayName("MbassadorProperties Tests")
 class MbassadorPropertiesTest {
-    @Test
-    @DisplayName("Default constructor creates non-null instance")
-    void testDefaultInstance() {
-        MbassadorProperties props = new MbassadorProperties();
-        assertThat(props).isNotNull();
+
+    private MbassadorProperties properties;
+
+    @BeforeEach
+    void setUp() {
+        properties = new MbassadorProperties();
     }
 
     @Test
-    @DisplayName("Field 'enabled' can be set and read")
-    void testEnabledField() {
-        MbassadorProperties props = new MbassadorProperties();
-        // Use reflection to set private field (covers all fields including those without setters)
-        try {
-            java.lang.reflect.Field f = MbassadorProperties.class.getDeclaredField("enabled");
-            f.setAccessible(true);
-            f.set(props, true);
-            Object value = f.get(props);
-            assertThat(value).isNotNull();
-        } catch (Exception e) {
-            // Field may have a more complex type; skip silently
-        }
-    }
-
-    @Test
-    @DisplayName("Field 'ringBuffer' can be set and read")
-    void testRingBufferField() {
-        MbassadorProperties props = new MbassadorProperties();
-        // Use reflection to set private field (covers all fields including those without setters)
-        try {
-            java.lang.reflect.Field f = MbassadorProperties.class.getDeclaredField("ringBuffer");
-            f.setAccessible(true);
-            f.set(props, true);
-            Object value = f.get(props);
-            assertThat(value).isNotNull();
-        } catch (Exception e) {
-            // Field may have a more complex type; skip silently
-        }
-    }
-
-    @Test
-    @DisplayName("Field 'ringBufferSize' can be set and read")
-    void testRingBufferSizeField() {
-        MbassadorProperties props = new MbassadorProperties();
-        // Use reflection to set private field (covers all fields including those without setters)
-        try {
-            java.lang.reflect.Field f = MbassadorProperties.class.getDeclaredField("ringBufferSize");
-            f.setAccessible(true);
-            f.set(props, 42);
-            Object value = f.get(props);
-            assertThat(value).isNotNull();
-        } catch (Exception e) {
-            // Field may have a more complex type; skip silently
-        }
-    }
-
-    @Test
-    @DisplayName("Field 'ringThreadNumbers' can be set and read")
-    void testRingThreadNumbersField() {
-        MbassadorProperties props = new MbassadorProperties();
-        // Use reflection to set private field (covers all fields including those without setters)
-        try {
-            java.lang.reflect.Field f = MbassadorProperties.class.getDeclaredField("ringThreadNumbers");
-            f.setAccessible(true);
-            f.set(props, 42);
-            Object value = f.get(props);
-            assertThat(value).isNotNull();
-        } catch (Exception e) {
-            // Field may have a more complex type; skip silently
-        }
-    }
-
-    @Test
-    @DisplayName("Field 'multiProducer' can be set and read")
-    void testMultiProducerField() {
-        MbassadorProperties props = new MbassadorProperties();
-        // Use reflection to set private field (covers all fields including those without setters)
-        try {
-            java.lang.reflect.Field f = MbassadorProperties.class.getDeclaredField("multiProducer");
-            f.setAccessible(true);
-            f.set(props, true);
-            Object value = f.get(props);
-            assertThat(value).isNotNull();
-        } catch (Exception e) {
-            // Field may have a more complex type; skip silently
-        }
-    }
-
-    @Test
-    @DisplayName("Public constant 'PREFIX' has expected value")
-    void testPREFIXConstant() {
+    @DisplayName("Configuration prefix is 'spring.mbassador'")
+    void testPrefix() {
         assertThat(MbassadorProperties.PREFIX).isEqualTo("spring.mbassador");
+    }
+
+    @Test
+    @DisplayName("Default enabled is false")
+    void testDefaultEnabled() {
+        assertThat(properties.isEnabled()).isFalse();
+    }
+
+    @Test
+    @DisplayName("Setter for enabled updates the value")
+    void testSetEnabled() {
+        properties.setEnabled(true);
+        assertThat(properties.isEnabled()).isTrue();
+    }
+
+    @Test
+    @DisplayName("Default ringBuffer is false")
+    void testDefaultRingBuffer() {
+        assertThat(properties.isRingBuffer()).isFalse();
+    }
+
+    @Test
+    @DisplayName("Setter for ringBuffer updates the value")
+    void testSetRingBuffer() {
+        properties.setRingBuffer(true);
+        assertThat(properties.isRingBuffer()).isTrue();
+    }
+
+    @Test
+    @DisplayName("Default ringBufferSize is 1024")
+    void testDefaultRingBufferSize() {
+        assertThat(properties.getRingBufferSize()).isEqualTo(1024);
+    }
+
+    @Test
+    @DisplayName("Setter for ringBufferSize updates the value")
+    void testSetRingBufferSize() {
+        properties.setRingBufferSize(2048);
+        assertThat(properties.getRingBufferSize()).isEqualTo(2048);
+    }
+
+    @Test
+    @DisplayName("Default ringThreadNumbers is 4")
+    void testDefaultRingThreadNumbers() {
+        assertThat(properties.getRingThreadNumbers()).isEqualTo(4);
+    }
+
+    @Test
+    @DisplayName("Setter for ringThreadNumbers updates the value")
+    void testSetRingThreadNumbers() {
+        properties.setRingThreadNumbers(8);
+        assertThat(properties.getRingThreadNumbers()).isEqualTo(8);
+    }
+
+    @Test
+    @DisplayName("Default multiProducer is false")
+    void testDefaultMultiProducer() {
+        assertThat(properties.isMultiProducer()).isFalse();
+    }
+
+    @Test
+    @DisplayName("Setter for multiProducer updates the value")
+    void testSetMultiProducer() {
+        properties.setMultiProducer(true);
+        assertThat(properties.isMultiProducer()).isTrue();
     }
 }

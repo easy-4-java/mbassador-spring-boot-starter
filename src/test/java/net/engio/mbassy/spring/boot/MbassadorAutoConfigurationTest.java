@@ -19,13 +19,20 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.runner.ApplicationContextRunner;
 
+import net.engio.mbassy.bus.MBassador;
+import net.engio.mbassy.bus.error.IPublicationErrorHandler;
+import net.engio.mbassy.spring.boot.event.MBassadorEvent;
+import net.engio.mbassy.spring.boot.handler.PublicationErrorLoggedHandler;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * Unit tests for {{ @link MbassadorAutoConfiguration }}.
+ * Unit tests for {@link MbassadorAutoConfiguration}.
  *
- * <p>Verifies the auto-configuration activates under the expected conditions
- * and exposes its declared beans.</p>
+ * <p>Verifies the auto-configuration activates under the expected conditions,
+ * exposes its declared beans, exercises both branches of the
+ * {@code mbassador()} factory method and honours the
+ * {@link org.springframework.context.ApplicationContextAware} contract.</p>
  *
  * @author [@Loong Wan](https://github.com/loong10k)
  * @since 1.0.0
@@ -47,7 +54,12 @@ class MbassadorAutoConfigurationTest {
     void testLoadsWhenEnabledPropertySet() {
         runner.withUserConfiguration(MbassadorAutoConfiguration.class)
                 .withPropertyValues("spring.mbassador.enabled=true")
-                .run(context -> assertThat(context).hasSingleBean(MbassadorAutoConfiguration.class));
+                .run(context -> {
+                    assertThat(context).hasSingleBean(MbassadorAutoConfiguration.class);
+                    assertThat(context).hasSingleBean(MBassador.class);
+                    assertThat(context).hasSingleBean(MbassadorTemplate.class);
+                    assertThat(context).hasSingleBean(IPublicationErrorHandler.class);
+                });
     }
 
     @Test
@@ -55,5 +67,52 @@ class MbassadorAutoConfigurationTest {
     void testNotLoadedWhenPropertyAbsent() {
         runner.withUserConfiguration(MbassadorAutoConfiguration.class)
                 .run(context -> assertThat(context).doesNotHaveBean(MbassadorAutoConfiguration.class));
+    }
+
+    @Test
+    @DisplayName("errorHandler bean is a PublicationErrorLoggedHandler")
+    void testErrorHandlerBean() {
+        runner.withUserConfiguration(MbassadorAutoConfiguration.class)
+                .withPropertyValues("spring.mbassador.enabled=true")
+                .run(context ->
+                        assertThat(context.getBean(IPublicationErrorHandler.class))
+                                .isInstanceOf(PublicationErrorLoggedHandler.class));
+    }
+
+    @Test
+    @DisplayName("mbassador() builds a bus when the error handler is provided")
+    void testMbassadorWithErrorHandler() {
+        MbassadorAutoConfiguration configuration = new MbassadorAutoConfiguration();
+        MbassadorProperties properties = new MbassadorProperties();
+        IPublicationErrorHandler handler = new PublicationErrorLoggedHandler();
+
+        MBassador<MBassadorEvent> bus = configuration.mbassador(properties, handler);
+
+        assertThat(bus).isNotNull();
+    }
+
+    @Test
+    @DisplayName("mbassador() builds a bus when the error handler is null")
+    void testMbassadorWithoutErrorHandler() {
+        MbassadorAutoConfiguration configuration = new MbassadorAutoConfiguration();
+        MbassadorProperties properties = new MbassadorProperties();
+
+        MBassador<MBassadorEvent> bus = configuration.mbassador(properties, null);
+
+        assertThat(bus).isNotNull();
+    }
+
+    @Test
+    @DisplayName("setApplicationContext/getApplicationContext round-trip")
+    void testApplicationContextAware() {
+        MbassadorAutoConfiguration configuration = new MbassadorAutoConfiguration();
+        assertThat(configuration.getApplicationContext()).isNull();
+
+        runner.withUserConfiguration(MbassadorAutoConfiguration.class)
+                .withPropertyValues("spring.mbassador.enabled=true")
+                .run(context -> {
+                    MbassadorAutoConfiguration bean = context.getBean(MbassadorAutoConfiguration.class);
+                    assertThat(bean.getApplicationContext()).isSameAs(context.getSourceApplicationContext());
+                });
     }
 }

@@ -15,13 +15,18 @@
  */
 package net.engio.mbassy.spring.boot.hooks;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import net.engio.mbassy.bus.MBassador;
+import net.engio.mbassy.spring.boot.event.MBassadorEvent;
 
 /**
- * Unit tests for {{ @link MBassadorShutdownHook }}.
+ * Unit tests for {@link MBassadorShutdownHook}.
  *
  * @author [@Loong Wan](https://github.com/loong10k)
  * @since 1.0.0
@@ -30,9 +35,29 @@ import static org.assertj.core.api.Assertions.assertThat;
 class MBassadorShutdownHookTest {
 
     @Test
-    @DisplayName("Instance can be created via constructor")
-    void testInstantiation() {
-        MBassadorShutdownHook instance = new MBassadorShutdownHook(null);
-        assertThat(instance).isNotNull();
+    @DisplayName("Constructor accepts a null bus")
+    void testConstructorWithNull() {
+        MBassadorShutdownHook hook = new MBassadorShutdownHook(null);
+        assertThat(hook).isNotNull();
+    }
+
+    @Test
+    @DisplayName("Constructor stores the provided bus")
+    void testConstructorWithBus() {
+        MBassador<MBassadorEvent> bus = mock(MBassador.class);
+        MBassadorShutdownHook hook = new MBassadorShutdownHook(bus);
+        assertThat(hook).isNotNull();
+        assertThat(hook).isInstanceOf(Thread.class);
+    }
+
+    @Test
+    @DisplayName("run() shuts the bus down")
+    void testRunShutsDown() {
+        MBassador<MBassadorEvent> bus = mock(MBassador.class);
+        MBassadorShutdownHook hook = new MBassadorShutdownHook(bus);
+
+        hook.run();
+
+        verify(bus).shutdown();
     }
 }
