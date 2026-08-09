@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import net.engio.mbassy.bus.error.IPublicationErrorHandler;
 import net.engio.mbassy.bus.error.PublicationError;
 
+/**\n * Handler that logs publication errors from the MBassador event bus.\n *\n * @author [@Loong Wan](https://github.com/loong10k)\n * @since 1.0.0\n */
 public class PublicationErrorLoggedHandler implements IPublicationErrorHandler {
 
 	private static final Logger LOG = LoggerFactory.getLogger(PublicationErrorLoggedHandler.class);
