@@ -41,7 +41,7 @@ import net.engio.mbassy.spring.boot.event.MBassadorEvent;
  * <p>Every public method is exercised by stubbing the wrapped
  * {@link MBassador} and verifying the template delegates correctly.</p>
  *
- * @author [@Loong Wan](https://github.com/loong10k)
+ * @author <a href="https://github.com/loong10k">Loong Wan</a>
  * @since 1.0.0
  */
 @DisplayName("MbassadorTemplate Tests")
