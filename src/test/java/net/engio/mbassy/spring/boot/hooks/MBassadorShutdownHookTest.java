@@ -28,7 +28,7 @@ import net.engio.mbassy.spring.boot.event.MBassadorEvent;
 /**
  * Unit tests for {@link MBassadorShutdownHook}.
  *
- * @author [@Loong Wan](https://github.com/loong10k)
+ * @author <a href="https://github.com/loong10k">Loong Wan</a>
  * @since 1.0.0
  */
 @DisplayName("MBassadorShutdownHook Tests")

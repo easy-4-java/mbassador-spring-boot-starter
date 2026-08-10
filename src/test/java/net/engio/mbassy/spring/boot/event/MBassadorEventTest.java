@@ -30,7 +30,7 @@ import org.junit.jupiter.api.Test;
  * behaviour: constructor, timestamp, route expression, source override, field
  * getters/setters and {@code toString}.</p>
  *
- * @author [@Loong Wan](https://github.com/loong10k)
+ * @author <a href="https://github.com/loong10k">Loong Wan</a>
  * @since 1.0.0
  */
 @DisplayName("MBassadorEvent Tests")
