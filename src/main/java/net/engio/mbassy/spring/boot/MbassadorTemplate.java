@@ -27,7 +27,7 @@ import net.engio.mbassy.bus.error.IPublicationErrorHandler;
 import net.engio.mbassy.bus.publication.SyncAsyncPostCommand;
 import net.engio.mbassy.spring.boot.event.MBassadorEvent;
 
-/**\n * Template for MBassador event bus operations.\n *\n * @author [@Loong Wan](https://github.com/loong10k)\n * @since 1.0.0\n */
+/**\n * Template for MBassador event bus operations.\n *\n * @author <a href="https://github.com/loong10k">Loong Wan</a>\n * @since 1.0.0\n */
 public class MbassadorTemplate {
 	
 	@Autowired	
