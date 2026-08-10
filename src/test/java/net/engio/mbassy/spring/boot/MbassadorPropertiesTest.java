@@ -27,7 +27,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * <p>Verifies the configuration prefix, the default values and every
  * getter/setter.</p>
  *
- * @author [@Loong Wan](https://github.com/loong10k)
+ * @author <a href="https://github.com/loong10k">Loong Wan</a>
  * @since 1.0.0
  */
 @DisplayName("MbassadorProperties Tests")
