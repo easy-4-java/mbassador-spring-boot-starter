@@ -34,7 +34,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * {@code mbassador()} factory method and honours the
  * {@link org.springframework.context.ApplicationContextAware} contract.</p>
  *
- * @author [@Loong Wan](https://github.com/loong10k)
+ * @author <a href="https://github.com/loong10k">Loong Wan</a>
  * @since 1.0.0
  */
 @DisplayName("MbassadorAutoConfiguration Tests")
