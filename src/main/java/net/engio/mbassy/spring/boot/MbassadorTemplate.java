@@ -32,38 +32,68 @@ public class MbassadorTemplate {
 	
 	@Autowired	
 	private MBassador<MBassadorEvent> mbassador;
+	/**
+	 * <p>Post.</p>
+	 * @param message the message
+	 * @return the sync async post command< m bassador event>
+	 */
 	
 	public SyncAsyncPostCommand<MBassadorEvent> post(MBassadorEvent message) {
 		return mbassador.post(message);
 	}
+	/**
+	 * <p>Publish.</p>
+	 * @param message the message
+	 * @return the i message publication
+	 */
 	
 	public IMessagePublication publish(MBassadorEvent message) {
 		return mbassador.publish(message);
 	}
+	/**
+	 * <p>Publish async.</p>
+	 * @param message the message
+	 * @return the i message publication
+	 */
 	
 	public IMessagePublication publishAsync(MBassadorEvent message) {
 		return mbassador.publishAsync(message);
 	}
+	/**
+	 * <p>Publish async.</p>
+	 * @param message the message
+	 * @param timeout the timeout
+	 * @param unit the unit
+	 * @return the i message publication
+	 */
 	
 	public IMessagePublication publishAsync(MBassadorEvent message, long timeout, TimeUnit unit) {
 		return mbassador.publishAsync(message, timeout, unit);
 	}
+	/** Gets the registered error handlers. */
 	
 	public Collection<IPublicationErrorHandler> getRegisteredErrorHandlers() {
 		return mbassador.getRegisteredErrorHandlers();
 	}
+	/**
+	 * <p>Has pending messages.</p>
+	 * @return the boolean
+	 */
 	
 	public boolean hasPendingMessages() {
 		return mbassador.hasPendingMessages();
 	}
+	/** Gets the runtime. */
 	
 	public BusRuntime getRuntime() {
 		return mbassador.getRuntime();
 	}
+	/** Gets the mbassador. */
 
 	public MBassador<MBassadorEvent> getMbassador() {
 		return mbassador;
 	}
+	/** Sets the mbassador. */
 
 	public void setMbassador(MBassador<MBassadorEvent> mbassador) {
 		this.mbassador = mbassador;

@@ -20,6 +20,10 @@ public class PublicationErrorLoggedHandler implements IPublicationErrorHandler {
 	public PublicationErrorLoggedHandler(boolean printStackTrace) {
 		this.printStackTrace = printStackTrace;
 	}
+	/**
+	 * <p>Handle error.</p>
+	 * @param error the error
+	 */
 
 	@Override
 	public void handleError(PublicationError error) {

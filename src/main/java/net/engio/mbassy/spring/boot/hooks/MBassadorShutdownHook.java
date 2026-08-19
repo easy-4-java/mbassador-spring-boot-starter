@@ -11,6 +11,9 @@ public class MBassadorShutdownHook extends Thread{
 	public MBassadorShutdownHook(MBassador<MBassadorEvent> mbassador) {
 		this.mbassador = mbassador;
 	}
+	/**
+	 * <p>Run.</p>
+	 */
 	
 	@Override
 	public void run() {

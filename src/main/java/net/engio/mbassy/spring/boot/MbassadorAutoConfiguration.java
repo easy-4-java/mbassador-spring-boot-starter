@@ -23,10 +23,20 @@ import net.engio.mbassy.spring.boot.hooks.MBassadorShutdownHook;
 @ConditionalOnClass({ MBassador.class })
 @ConditionalOnProperty(prefix = MbassadorProperties.PREFIX, value = "enabled", havingValue = "true")
 @EnableConfigurationProperties({ MbassadorProperties.class })
+/**
+ * <p>Auto-configuration for Mbassador integration.</p>
+ *
+ * @author <a href="https://github.com/loong10k">Loong Wan</a>
+ * @since 1.0.0
+ */
 public class MbassadorAutoConfiguration implements ApplicationContextAware {
 
 	private static final Logger LOG = LoggerFactory.getLogger(MbassadorAutoConfiguration.class);
 	private ApplicationContext applicationContext;
+	/**
+	 * <p>Error handler.</p>
+	 * @return the i publication error handler
+	 */
 	
 	@Bean
 	@ConditionalOnMissingBean
@@ -60,16 +70,22 @@ public class MbassadorAutoConfiguration implements ApplicationContextAware {
 		return mbassador;
 
 	}
+	/**
+	 * <p>Disruptor template.</p>
+	 * @return the mbassador template
+	 */
 	
 	@Bean
 	public MbassadorTemplate disruptorTemplate() {
 		return new MbassadorTemplate();
 	}
+	/** Sets the application context. */
  
 	@Override
 	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
 		this.applicationContext = applicationContext;
 	}
+	/** Gets the application context. */
 
 	public ApplicationContext getApplicationContext() {
 		return applicationContext;
